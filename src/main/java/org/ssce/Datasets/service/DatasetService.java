@@ -1,13 +1,15 @@
 package org.ssce.Datasets.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssce.Datasets.model.Dataset;
 import org.ssce.Datasets.respository.DatasetRepository;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,7 +26,7 @@ public class DatasetService {
     }
 
     @Transactional
-    public List<Dataset> findByUuid(UUID uuid){
+    public Dataset findByUuid(UUID uuid){
         return repository.findByUuid(uuid);
     }
 }

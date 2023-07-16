@@ -42,6 +42,7 @@ public class Dataset {
     @Column(name = "router_config", columnDefinition = "jsonb")
     private  Map<String , Object> routerConfig;
 
+    @NotEmpty(message = "enter the status")
     @Enumerated(EnumType.STRING)
     private Status status;
 

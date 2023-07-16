@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface DatasetRepository extends JpaRepository<Dataset, UUID> {
-    public List<Dataset> findByUuid(UUID uuid);
+    public Dataset findByUuid(UUID uuid);
 }

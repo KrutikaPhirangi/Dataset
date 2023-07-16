@@ -8,10 +8,7 @@ import org.ssce.Datasets.model.Dataset;
 import org.ssce.Datasets.service.DatasetService;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/dataset")
@@ -19,39 +16,37 @@ public class DatasetController {
 
     private final DatasetService datasetService;
 
-    private final DatasetResponse datasetResponse;
-
     @Autowired
-    public DatasetController(DatasetService service,DatasetResponse datasetResponse){
+    public DatasetController(DatasetService service){
         this.datasetService=service;
-        this.datasetResponse=datasetResponse;
     }
 
     @PostMapping("/create")
-    public DatasetResponse createData(@RequestBody @Valid Dataset dataset){
-
-        if(Dataset.Status.values().equals(null)){
-
+    public DatasetResponse createData(@RequestBody @Valid Dataset dataset) {
+        if (dataset.getStatus() == null) {
+            dataset.setStatus(Dataset.Status.DRAFT);
         }
-        datasetService.createData(dataset);
-        Map<String ,Object> ok = new HashMap<>();
-        ok.put("err",HttpStatus.OK);
-        ok.put("errmsg"," ");
+            datasetService.createData(dataset);
+            Map<String, Object> ok = new HashMap<>();
+            ok.put("status", HttpStatus.OK.value());
+            ok.put("errmsg", " ");
 
-        Map<String , Object> success =  new HashMap<>();
-        success.put("id",dataset.getUuid());
+            Map<String, Object> success = new HashMap<>();
+            success.put("id", dataset.getUuid());
 
-        Map<String , Object> err = new HashMap<>();
-        err.put("err" , HttpStatus.BAD_REQUEST);
-        err.put("errmsg","ERROR");
-
-        Map<String,Object> error = new HashMap<>();
-
-        return new DatasetResponse("api.dataset.create", "v1", ok, HttpStatus.OK, success);
+            return new DatasetResponse("api.dataset.create", "v1", ok, HttpStatus.OK, success);
     }
 
     @GetMapping("/get/{uuid}")
-    public List<Dataset> findByUuid(@PathVariable()UUID uuid){
-        return datasetService.findByUuid(uuid);
+    public DatasetResponse findByUuid(@PathVariable()UUID uuid) {
+        Optional<Dataset> optional = Optional.ofNullable(datasetService.findByUuid(uuid));
+        Map<String ,Object> ok = new HashMap<>();
+        ok.put("status",HttpStatus.OK.value());
+        ok.put("errmsg"," ");
+
+        Map<String , Object> success =  new HashMap<>();
+        success.put("dataset",optional.get());
+
+        return new DatasetResponse("api.dataset.create", "v1", ok, HttpStatus.OK, success);
     }
 }
