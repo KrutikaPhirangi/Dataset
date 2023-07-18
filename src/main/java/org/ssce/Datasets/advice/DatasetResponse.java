@@ -11,28 +11,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.io.IOException;
+import java.net.ConnectException;
 import java.util.*;
 
 @Component
 @RestControllerAdvice
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class DatasetResponse extends ResponseEntityExceptionHandler {
 
     private String id;
     private String ver;
     private Map<String , Object> param ;
-    private HttpStatus responseCode;
     private Map<String , Object> result ;
-
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -41,43 +39,87 @@ public class DatasetResponse extends ResponseEntityExceptionHandler {
         responseBody.put("ver", "v1");
         List<FieldError> fieldErrors= ex.getBindingResult().getFieldErrors();
 
-        List<String> listErrors = new ArrayList<>();
+        Map<String,Object> listErrors = new HashMap<>();
 
         for (FieldError fieldError : fieldErrors){
             String errorMessage = fieldError.getDefaultMessage();
-            listErrors.add(errorMessage);
+            listErrors.put("errMsg",errorMessage);
+            listErrors.put("err",HttpStatus.BAD_REQUEST);
         }
         responseBody.put("params",listErrors);
-        responseBody.put("responseCode", status.value());
+        responseBody.put("responseCode", "FAILED");
         responseBody.put("result",new HashMap<>());
 
         return new ResponseEntity<>(responseBody,headers,status);
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Map<String,Object> responseBody = new LinkedHashMap<>();
         responseBody.put("id", "api.dataset.create");
         responseBody.put("ver", "v1");
-        String msg =e.getLocalizedMessage();
-        responseBody.put("param",msg);
+        Map<String,Object> param = new HashMap<>();
+        param.put("errMsg","SET STATUS");
+        param.put("err",HttpStatus.BAD_REQUEST);
+        responseBody.put("param",param);
         responseBody.put("responseCode",status.value());
         responseBody.put("result", new HashMap<>());
 
         return new ResponseEntity<>(responseBody,headers,status);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    protected ResponseEntity<Object> handleMethodArgumentTypeMismatchException( IllegalArgumentException e, HttpStatus status){
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex){
         Map<String,Object> responseBody = new LinkedHashMap<>();
         responseBody.put("id", "api.dataset.create");
         responseBody.put("ver", "v1");
-        Map<String,Object> param = new LinkedHashMap<>();
-        param.put("status",e.getMessage());
+        Map<String,Object> param = new HashMap<>();
+        param.put("errMsg","Invalid UUId");
+        param.put("err",HttpStatus.BAD_REQUEST);
         responseBody.put("param",param);
-        responseBody.put("responseCode",status.value());
-        responseBody.put("result",new HashMap<>());
+        responseBody.put("responseCode","FAILED");
+        responseBody.put("result", new HashMap<>());
 
-        return new ResponseEntity<>(responseBody,status);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex){
+        Map<String,Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("id", "api.dataset.create");
+        responseBody.put("ver", "v1");
+        Map<String,Object> param = new HashMap<>();
+        param.put("errMsg","Dataset Not Found");
+        responseBody.put("param",param);
+        responseBody.put("result", new HashMap<>());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        Map<String,Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("id", "api.dataset.create");
+        responseBody.put("ver", "v1");
+        Map<String,Object> param = new HashMap<>();
+        param.put("errMsg","Invalid URI need parameter");
+        responseBody.put("param",param);
+        responseBody.put("result", new HashMap<>());
+
+        return new ResponseEntity<>(responseBody,headers,status);
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<Object> handleConnectException(ConnectException ex){
+        Map<String,Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("id", "api.dataset.create");
+        responseBody.put("ver", "v1");
+        Map<String,Object> param = new HashMap<>();
+        param.put("errMsg","Server is currently unavailable");
+        responseBody.put("param",param);
+        responseBody.put("result", new HashMap<>());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
 }
