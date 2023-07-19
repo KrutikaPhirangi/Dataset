@@ -3,7 +3,6 @@ package org.ssce.Datasets.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.ssce.Datasets.advice.DatasetResponse;
 import org.ssce.Datasets.model.Dataset;
@@ -35,8 +34,7 @@ public class DatasetController {
         DatasetResponse response = new DatasetResponse();
         response.setId("api.dataset.create");
         response.setVer("v1");
-        Map<String, Object> status = new HashMap<>();
-        response.setParam(status);
+        response.setParam(new HashMap<>());
         Map<String, Object> uuid = new HashMap<>();
         uuid.put("id", dataset.getUuid());
         response.setResult(uuid);
@@ -49,8 +47,7 @@ public class DatasetController {
         DatasetResponse response = new DatasetResponse();
         response.setId("api.dataset.create");
         response.setVer("v1");
-        Map<String, Object> param = new HashMap<>();
-        response.setParam(param);
+        response.setParam(new HashMap<>());
         Map<String, Object> dataset = new HashMap<>();
         dataset.put("dataset", optional.get());
         response.setResult(dataset);
