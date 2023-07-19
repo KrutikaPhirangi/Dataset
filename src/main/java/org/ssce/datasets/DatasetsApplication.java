@@ -1,4 +1,4 @@
-package org.ssce.Datasets;
+package org.ssce.datasets;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,8 +1,8 @@
-package org.ssce.Datasets.respository;
+package org.ssce.datasets.respository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.ssce.Datasets.model.Dataset;
+import org.ssce.datasets.model.Dataset;
 
 import java.util.UUID;
 

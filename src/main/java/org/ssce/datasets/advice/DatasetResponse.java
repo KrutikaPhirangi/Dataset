@@ -1,4 +1,4 @@
-package org.ssce.Datasets.advice;
+package org.ssce.datasets.advice;
 
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpHeaders;

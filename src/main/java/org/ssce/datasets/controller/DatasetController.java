@@ -1,12 +1,12 @@
-package org.ssce.Datasets.controller;
+package org.ssce.datasets.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
-import org.ssce.Datasets.advice.DatasetResponse;
-import org.ssce.Datasets.model.Dataset;
-import org.ssce.Datasets.service.DatasetService;
+import org.ssce.datasets.advice.DatasetResponse;
+import org.ssce.datasets.model.Dataset;
+import org.ssce.datasets.service.DatasetService;
 
 import javax.validation.Valid;
 import java.util.*;

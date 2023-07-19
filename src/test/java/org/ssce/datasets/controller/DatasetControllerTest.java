@@ -1,4 +1,4 @@
-package org.ssce.Datasets.controller;
+package org.ssce.datasets.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,8 +11,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.ssce.Datasets.model.Dataset;
-import org.ssce.Datasets.service.DatasetService;
+import org.ssce.datasets.model.Dataset;
+import org.ssce.datasets.service.DatasetService;
 
 import java.time.LocalDateTime;
 import java.util.*;

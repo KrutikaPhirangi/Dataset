@@ -1,4 +1,4 @@
-package org.ssce.Datasets.repository;
+package org.ssce.datasets.repository;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
-import org.ssce.Datasets.model.Dataset;
-import org.ssce.Datasets.respository.DatasetRepository;
+import org.ssce.datasets.model.Dataset;
+import org.ssce.datasets.respository.DatasetRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;

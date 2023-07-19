@@ -1,10 +1,10 @@
-package org.ssce.Datasets.service;
+package org.ssce.datasets.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.ssce.Datasets.model.Dataset;
-import org.ssce.Datasets.respository.DatasetRepository;
+import org.ssce.datasets.model.Dataset;
+import org.ssce.datasets.respository.DatasetRepository;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
