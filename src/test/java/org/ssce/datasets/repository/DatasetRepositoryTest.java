@@ -26,13 +26,13 @@ public class DatasetRepositoryTest {
     @BeforeEach
     void setup(){
         dataset = new Dataset();
-        dataset.setUuid(UUID.fromString("57099329-5fc7-40ef-8963-cd06412fe3e4"));
-        dataset.setName("Sam");
+        dataset.setUuid(UUID.fromString("544fc0d0-d847-4eef-b934-0525f4b4e9b4"));
+        dataset.setName("dataset");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Oggy");
-        dataset.setUpdatedBy("Olly");
+        dataset.setCreatedBy("user");
+        dataset.setUpdatedBy("user1");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         datasetRepository.save(dataset);
@@ -46,14 +46,14 @@ public class DatasetRepositoryTest {
     @Test
     @Rollback(value = false)
     void testDatasetFindByUuid(){
-        Dataset data = datasetRepository.findByUuid(UUID.fromString("57099329-5fc7-40ef-8963-cd06412fe3e4"));
+        Dataset data = datasetRepository.findByUuid(UUID.fromString("544fc0d0-d847-4eef-b934-0525f4b4e9b4"));
         assertThat(data.getName()).isEqualTo(dataset.getName());
         assertThat(data.getUuid()).isEqualTo(dataset.getUuid());
     }
 
     @Test
     void testDatasetFindByUuidError(){
-       Optional<Dataset> optional = Optional.ofNullable(datasetRepository.findByUuid(UUID.fromString("57093425-5fc7-40ef-9876-cd06412fe3e4")));
+       Optional<Dataset> optional = Optional.ofNullable(datasetRepository.findByUuid(UUID.fromString("544fc0d0-d809-4eef-b934-0525f4b4e9e5")));
         assertThat(optional.isEmpty()).isTrue();
     }
 }

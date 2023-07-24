@@ -41,12 +41,12 @@ public class DatasetControllerTest {
     void testCreateDataset() throws Exception {
         Dataset data = new Dataset();
         data.setUuid(UUID.randomUUID());
-        data.setName("Sam");
+        data.setName("dataset");
         data.setDataSchema(new HashMap<>());
         data.setRouterConfig(new HashMap<>());
         data.setStatus(Dataset.Status.DRAFT);
-        data.setCreatedBy("Oggy");
-        data.setUpdatedBy("Olly");
+        data.setCreatedBy("user");
+        data.setUpdatedBy("user1");
         data.setCreatedDate(LocalDateTime.now());
         data.setUpdatedDate(LocalDateTime.now());
         when(datasetService.createData(any(Dataset.class))).thenReturn(data);
@@ -60,12 +60,12 @@ public class DatasetControllerTest {
     void testCreateDataError() throws Exception {
         Dataset dataset = new Dataset();
         dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("Sam12");
+        dataset.setName("dataset12");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Oggy");
-        dataset.setUpdatedBy("Olly");
+        dataset.setCreatedBy("user");
+        dataset.setUpdatedBy("user1");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         when(datasetService.createData(any(Dataset.class))).thenReturn(dataset);
@@ -80,12 +80,12 @@ public class DatasetControllerTest {
     void testGetDatasetError() throws Exception {
         Dataset dataset = new Dataset();
         dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("Sam12");
+        dataset.setName("dataset12");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Oggy");
-        dataset.setUpdatedBy("Olly");
+        dataset.setCreatedBy("user");
+        dataset.setUpdatedBy("user1");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         when(datasetService.findByUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"))).thenReturn(dataset);
@@ -96,12 +96,12 @@ public class DatasetControllerTest {
     void testGetDataset() throws Exception {
         Dataset dataset = new Dataset();
         dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("Sam12");
+        dataset.setName("dataset12");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Oggy");
-        dataset.setUpdatedBy("Olly");
+        dataset.setCreatedBy("user");
+        dataset.setUpdatedBy("user1");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         when(datasetService.findByUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"))).thenReturn(dataset);
@@ -112,12 +112,12 @@ public class DatasetControllerTest {
     void testGetDatasetErrors() throws Exception {
         Dataset dataset = new Dataset();
         dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("Sam12");
+        dataset.setName("dataset12");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Oggy");
-        dataset.setUpdatedBy("Olly");
+        dataset.setCreatedBy("user");
+        dataset.setUpdatedBy("user1");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         when(datasetService.findByUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"))).thenReturn(dataset);
@@ -128,12 +128,12 @@ public class DatasetControllerTest {
     void testGetDatasetNotFound() throws Exception {
         Dataset dataset = new Dataset();
         dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("Sam12");
+        dataset.setName("dataset12");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Oggy");
-        dataset.setUpdatedBy("Olly");
+        dataset.setCreatedBy("user");
+        dataset.setUpdatedBy("user1");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         when(datasetService.findByUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"))).thenReturn(dataset);

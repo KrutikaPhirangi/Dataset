@@ -1,3 +1,4 @@
+
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQL10Dialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.hibernate.show-sql=true
