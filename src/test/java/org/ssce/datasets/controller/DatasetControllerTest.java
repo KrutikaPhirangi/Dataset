@@ -41,12 +41,12 @@ public class DatasetControllerTest {
     void testCreateDataset() throws Exception {
         Dataset data = new Dataset();
         data.setUuid(UUID.randomUUID());
-        data.setName("dataset");
+        data.setName("datasetEmployeeTwo");
         data.setDataSchema(new HashMap<>());
         data.setRouterConfig(new HashMap<>());
         data.setStatus(Dataset.Status.DRAFT);
-        data.setCreatedBy("user");
-        data.setUpdatedBy("user1");
+        data.setCreatedBy("datasetEmployeeTwo");
+        data.setUpdatedBy("datasetEmployeeTwo");
         data.setCreatedDate(LocalDateTime.now());
         data.setUpdatedDate(LocalDateTime.now());
         when(datasetService.createData(any(Dataset.class))).thenReturn(data);
@@ -59,13 +59,13 @@ public class DatasetControllerTest {
     @Test
     void testCreateDataError() throws Exception {
         Dataset dataset = new Dataset();
-        dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("dataset12");
+        dataset.setUuid(UUID.fromString("19a53566-6990-4a3f-8e82-585412df00b2"));
+        dataset.setName("datasetEmployee2");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("user");
-        dataset.setUpdatedBy("user1");
+        dataset.setCreatedBy("datasetEmployeeTwo");
+        dataset.setUpdatedBy("datasetEmployeeTwo");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         when(datasetService.createData(any(Dataset.class))).thenReturn(dataset);
@@ -79,45 +79,45 @@ public class DatasetControllerTest {
     @Test
     void testGetDatasetError() throws Exception {
         Dataset dataset = new Dataset();
-        dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("dataset12");
+        dataset.setUuid(UUID.fromString("19a53566-6990-4a3f-8e82-585412df00b2"));
+        dataset.setName("datasetEmployee2");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("user");
-        dataset.setUpdatedBy("user1");
+        dataset.setCreatedBy("datasetEmployeeTwo");
+        dataset.setUpdatedBy("datasetEmployeeTwo");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
-        when(datasetService.findByUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"))).thenReturn(dataset);
-        this.mockMvc.perform(get("/dataset/get/51ababe2-a1e7-48ac-9e0d")).andDo(print()).andExpect(status().isBadRequest());
+        when(datasetService.findByUuid(UUID.fromString("19a53566-6990-4a3f-8e33-585412df00b2"))).thenReturn(dataset);
+        this.mockMvc.perform(get("/dataset/get/19a53566-6990-4585412df00b2")).andDo(print()).andExpect(status().isBadRequest());
     }
 
     @Test
     void testGetDataset() throws Exception {
         Dataset dataset = new Dataset();
-        dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("dataset12");
+        dataset.setUuid(UUID.fromString("19a53566-6990-4a3f-8e82-585412df00b2"));
+        dataset.setName("datasetEmployee2");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("user");
-        dataset.setUpdatedBy("user1");
+        dataset.setCreatedBy("datasetEmployeeTwo");
+        dataset.setUpdatedBy("datasetEmployeeTwo");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
-        when(datasetService.findByUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"))).thenReturn(dataset);
-        this.mockMvc.perform(get("/dataset/get/51ababe2-a1e7-48ac-9e0d-c8be18eeadea")).andDo(print()).andExpect(status().isOk());
+        when(datasetService.findByUuid(UUID.fromString("19a53566-6990-4a3f-8e82-585412df00b2"))).thenReturn(dataset);
+        this.mockMvc.perform(get("/dataset/get/19a53566-6990-4a3f-8e82-585412df00b2")).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
     void testGetDatasetErrors() throws Exception {
         Dataset dataset = new Dataset();
         dataset.setUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"));
-        dataset.setName("dataset12");
+        dataset.setName("datasetEmployee2");
         dataset.setDataSchema(new HashMap<>());
         dataset.setRouterConfig(new HashMap<>());
         dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("user");
-        dataset.setUpdatedBy("user1");
+        dataset.setCreatedBy("datasetEmployeeTwo");
+        dataset.setUpdatedBy("datasetEmployeeTwo");
         dataset.setCreatedDate(LocalDateTime.now());
         dataset.setUpdatedDate(LocalDateTime.now());
         when(datasetService.findByUuid(UUID.fromString("51ababe2-a1e7-48ac-9e0d-c8be18eeadea"))).thenReturn(dataset);

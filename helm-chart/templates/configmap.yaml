@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dataset-config
+  labels:
+    app: dataset-k8
+data:
+  POSTGRES_HOST: postgres
+  POSTGRES_DB: dataset
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: cG9zdGdyZXM=
