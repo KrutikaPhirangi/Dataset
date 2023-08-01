@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.ssce.datasets.model.Dataset;
 import org.ssce.datasets.respository.DatasetRepository;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -28,56 +27,35 @@ public class DatasetServiceTest {
 
     @BeforeEach
     void setup(){
-        dataset = new Dataset();
-        dataset.setUuid(UUID.fromString("57099329-5fc7-40ef-8963-cd06412fe3e4"));
-        dataset.setName("Sam");
-        dataset.setDataSchema(new HashMap<>());
-        dataset.setRouterConfig(new HashMap<>());
-        dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Oggy");
-        dataset.setUpdatedBy("Olly");
-        dataset.setCreatedDate(LocalDateTime.now());
-        dataset.setUpdatedDate(LocalDateTime.now());
+        UUID uuid = UUID.fromString("74059a86-98c1-45ea-b7ce-1609b71c87f9");
+        dataset = new Dataset(uuid, "datasetEmployee", new HashMap<>(), new HashMap<>(), Dataset.Status.DRAFT,
+                "datasetEmployee", "datasetEmployee", System.currentTimeMillis(), System.currentTimeMillis());
     }
 
     @Test
     void testCreateDataset(){
-        dataset = new Dataset();
-        dataset.setUuid(UUID.fromString("57099329-5fc7-40ef-8963-cd06412fe3e4"));
-        dataset.setName("Surabhi");
-        dataset.setDataSchema(new HashMap<>());
-        dataset.setRouterConfig(new HashMap<>());
-        dataset.setStatus(Dataset.Status.DRAFT);
-        dataset.setCreatedBy("Surabhi");
-        dataset.setUpdatedBy("Qwerty");
-        dataset.setCreatedDate(LocalDateTime.now());
-        dataset.setUpdatedDate(LocalDateTime.now());
+        UUID uuid = UUID.fromString("74059a86-98c1-45ea-b7ce-1609b71c87f9");
+        dataset = new Dataset(uuid, "datasetEmployee", new HashMap<>(), new HashMap<>(), Dataset.Status.DRAFT,
+                "datasetEmployee", "datasetEmployee", System.currentTimeMillis(), System.currentTimeMillis());
         when(datasetRepository.save(any(Dataset.class))).thenReturn(dataset);
         assertThat(datasetService.createData(dataset)).isEqualTo(dataset);
     }
 
     @Test
     void testGetByUuid(){
-        Dataset data = new Dataset();
-        data.setUuid(UUID.fromString("57099329-5fc7-40ef-8963-cd06412fe3e4"));
-        data.setName("Sam");
-        data.setDataSchema(new HashMap<>());
-        data.setRouterConfig(new HashMap<>());
-        data.setStatus(Dataset.Status.DRAFT);
-        data.setCreatedBy("Oggy");
-        data.setUpdatedBy("Olly");
-        data.setCreatedDate(LocalDateTime.now());
-        data.setUpdatedDate(LocalDateTime.now());
-        when(datasetRepository.findByUuid(UUID.fromString("57099329-5fc7-40ef-8963-cd06412fe3e4"))).thenReturn(data);
-        assertThat(datasetService.findByUuid(UUID.fromString("57099329-5fc7-40ef-8963-cd06412fe3e4")).getName()).isEqualTo(data.getName());
+        UUID uuid = UUID.fromString("74059a86-98c1-45ea-b7ce-1609b71c87f9");
+        dataset = new Dataset(uuid, "datasetEmployee", new HashMap<>(), new HashMap<>(), Dataset.Status.DRAFT,
+                "datasetEmployee", "datasetEmployee", System.currentTimeMillis(), System.currentTimeMillis());
+        when(datasetRepository.findByUuid(UUID.fromString("3fe59817-6892-4cd9-832a-6f96d7a6cd1a"))).thenReturn(dataset);
+        assertThat(datasetService.findByUuid(UUID.fromString("3fe59817-6892-4cd9-832a-6f96d7a6cd1a")).getName()).isEqualTo(dataset.getName());
     }
 
     @Test
     void getDatasetById_failure() {
-       when(datasetService.findByUuid(UUID.fromString("692046b9-7134-4354-a7f6-0dca739b5b23"))).thenThrow(new NoSuchElementException("User Not found"));
+       when(datasetService.findByUuid(UUID.fromString("692046b9-7134-4354-a7f6-0dca739b5b23"))).thenThrow(new NoSuchElementException("Data Not found"));
        Exception exception=assertThrows(NoSuchElementException.class,() ->{
            datasetService.findByUuid(UUID.fromString("692046b9-7134-4354-a7f6-0dca739b5b23"));
        });
-       assertTrue(exception.getMessage().contains("User Not found"));
+       assertTrue(exception.getMessage().contains("Data Not found"));
     }
 }

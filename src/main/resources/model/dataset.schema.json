@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-zA-Z!@#$%^&?|_<>]+$"
+    },
+    "dataSchema": {
+      "type": "object"
+    },
+    "routerConfig": {
+      "type": "object"
+    },
+    "status": {
+      "enum": ["LIVE","DRAFT","RETIRED"]
+    },
+    "createdBy": {
+      "type": "string",
+      "pattern": "^[a-zA-Z!@#$%^&?|_<>]+$"
+    },
+    "updatedBy": {
+      "type": "string",
+      "pattern": "^[a-zA-Z!@#$%^&?|_<>]+$"
+    }
+  },
+  "required": [
+    "name",
+    "dataSchema",
+    "routerConfig"
+  ],
+  "additionalProperties": true
+}

@@ -1,5 +1,11 @@
 package org.ssce.datasets.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +14,7 @@ import org.ssce.datasets.advice.DatasetResponse;
 import org.ssce.datasets.model.Dataset;
 import org.ssce.datasets.service.DatasetService;
 
-import javax.validation.Valid;
+import java.io.InputStream;
 import java.util.*;
 
 @RestController
@@ -17,39 +23,40 @@ public class DatasetController {
     @Autowired
     private DatasetService datasetService;
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public DatasetController(DatasetService service) {
         this.datasetService = service;
     }
 
     @PostMapping("/create")
-    public DatasetResponse createData(@RequestBody @Valid Dataset dataset) {
-        datasetService.createData(dataset);
-        DatasetResponse response = new DatasetResponse();
-        response.setId("api.dataset.create");
-        response.setVer("v1");
-        response.setParam(new HashMap<>());
-        Map<String, Object> uuid = new HashMap<>();
-        uuid.put("id", dataset.getUuid());
-        response.setResult(uuid);
-        return response;
+    public DatasetResponse createData(@RequestBody String requestBody) throws Exception {
+        InputStream schemaStream = DatasetController.class.getClassLoader().getResourceAsStream("model/dataset.schema.json");
+        JsonSchema schema = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7).getSchema(schemaStream);
+        JsonNode jsonNode = objectMapper.readTree(requestBody);
+
+        Set<ValidationMessage> errors = schema.validate(jsonNode);
+        List<String> listError = new ArrayList<>();
+        for (ValidationMessage err : errors) {
+           listError.add(err.toString());
+        }
+        if (errors.size() > 0) {
+            throw new Exception(listError.toString());
+        } else {
+            Dataset dataset = objectMapper.readValue(requestBody, Dataset.class);
+
+            Dataset saveDataset = datasetService.createData(dataset);
+            Map<String, Object> result = new HashMap<>();
+            result.put("id", saveDataset.getUuid());
+            return new DatasetResponse("api.dataset.create", "v1", new HashMap<>(), result);
+        }
     }
 
     @GetMapping("/get/{uuid}")
     public DatasetResponse findByUuid(@PathVariable() UUID uuid) {
         Optional<Dataset> optional = Optional.ofNullable(datasetService.findByUuid(uuid));
-        DatasetResponse response = new DatasetResponse();
-        response.setId("api.dataset.create");
-        response.setVer("v1");
-        response.setParam(new HashMap<>());
-        Map<String, Object> dataset = new HashMap<>();
-        dataset.put("dataset", optional.get());
-        response.setResult(dataset);
-        return response;
+        Map<String, Object> result = new HashMap<>();
+        result.put("dataset", optional.get());
+        return new DatasetResponse("api.dataset.create", "v1", new HashMap<>(), result);
     }
 }

@@ -16,9 +16,9 @@ public class DatasetService {
 
     @Transactional
     public Dataset createData( Dataset dataset) {
-
-        dataset.setCreatedDate(LocalDateTime.now());
-        dataset.setUpdatedDate(LocalDateTime.now());
+        dataset.setCreatedDate(System.currentTimeMillis());
+        dataset.setUpdatedDate(System.currentTimeMillis());
+        System.out.println(dataset);
         return repository.save(dataset);
     }
 
