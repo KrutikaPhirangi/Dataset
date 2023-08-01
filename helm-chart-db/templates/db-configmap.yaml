@@ -3,8 +3,9 @@ kind: ConfigMap
 metadata:
   name: postgres-config
   labels:
-    app: postgres
+    app: dataset-k8
 data:
+  POSTGRES_HOST: postgres
   POSTGRES_DB: dataset
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: cG9zdGdyZXM=
