@@ -6,12 +6,9 @@ import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
-import org.ssce.datasets.DatasetsApplication;
 import org.ssce.datasets.advice.DatasetResponse;
 import org.ssce.datasets.model.Dataset;
 import org.ssce.datasets.service.DatasetService;
@@ -25,9 +22,6 @@ public class DatasetController {
     @Autowired
     private DatasetService datasetService;
 
-    @Value("${POSTGRES_HOST}")
-    private String local;
-
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public DatasetController(DatasetService service) {
@@ -36,7 +30,6 @@ public class DatasetController {
 
     @PostMapping("/create")
     public DatasetResponse createData(@RequestBody String requestBody) throws Exception {
-        System.out.println(local);
         InputStream schemaStream = DatasetController.class.getClassLoader().getResourceAsStream("model/dataset.schema.json");
         JsonSchema schema = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7).getSchema(schemaStream);
         JsonNode jsonNode = objectMapper.readTree(requestBody);

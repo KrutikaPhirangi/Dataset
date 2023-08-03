@@ -18,7 +18,6 @@ public class DatasetService {
     public Dataset createData( Dataset dataset) {
         dataset.setCreatedDate(System.currentTimeMillis());
         dataset.setUpdatedDate(System.currentTimeMillis());
-        System.out.println(dataset);
         return repository.save(dataset);
     }
 
